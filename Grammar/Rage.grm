@@ -1,0 +1,134 @@
+"Name"     = 'Rage'
+"Author"   = 'Schukin G.'
+"Version"  = '1.0'
+"About"    = 'Rage language grammar'
+
+"Case Sensitive" = True
+"Start Symbol" = <Program>
+
+! -------------------------------------------------------------------
+! Terminals
+! -------------------------------------------------------------------
+
+!{Hex Digit}      = {Digit} + [abcdefABCDEF]
+!{Oct Digit}      = [01234567]
+
+{Id Head}        = {Letter} + [_]
+{Id Tail}        = {Id Head} + {Digit}
+
+{String Ch}      = {Printable} - ["]
+{Char Ch}        = {Printable} - ['']
+
+DecLiteral       = [123456789]{digit}*
+!OctLiteral       = 0{Oct Digit}*
+!HexLiteral       = 0x{Hex Digit}+
+!FloatLiteral     = {Digit}*'.'{Digit}+
+
+!StringLiteral    = '"'( {String Ch} | '\'{Printable} )* '"'
+!CharLiteral      = '' ( {Char Ch} | '\'{Printable} )''
+
+Id               = {Id Head}{Id Tail}*
+
+CodeString       = '{' {Printable}* '}'
+
+! -------------------------------------------------------------------
+! Comments
+! -------------------------------------------------------------------
+
+Comment Start = '/*'
+Comment End   = '*/'
+Comment Line  = '//'
+
+! {Non Slash}     = {Printable} - [/]
+! {Non Asterisk}  = {Printable} - [*]
+!
+! Whitespace     = {Whitespace}+
+!                | '/*' (  {Non Asterisk} | '*' {Non Slash}? )*  '*/'
+
+
+! -------------------------------------------------------------------
+! Rules
+! -------------------------------------------------------------------
+
+<Data> ::= Id | Id '[' <Expr> ']'
+<Data type> ::= Id | Id '[' <Expr> ']' | Id '[' ']'
+<Data decl> ::= <Data type> <Data>
+<Order> ::= seq | par |
+
+<Program> ::= <Decl list> 
+<Decl list> ::= <Decl> <Decl list> |
+<Decl> ::= <Package decl> | <Code decl>
+
+<Package decl> ::= package Id
+
+<Code decl> ::= <Atomic code decl> | <Struct code decl>
+<Atomic code decl> ::= atomic Id '(' <Code formal arg list> ')' CodeString
+<Struct code decl> ::= Id '(' <Code formal arg list> ')' <Statement>
+
+<Code formal arg list> ::= <Data decl>
+             | <Data decl> ',' <Code formal arg list> |
+
+<Code arg list> ::= <Expr>
+             | <Expr> ',' <Code arg list> |
+
+<Statement> ::= <Data statement>
+            | <Block statement>
+            | <Call statement>
+            | <Cond statement>
+            | <For statement>
+            | <While statement>
+<Statement list> ::= <Statement> <Statement list> | 
+
+<Data statement> ::= <Data decl> ';'
+
+<Block statement> ::= <Order> '{' <Statement list> '}'
+
+<Call statement> ::= Id '(' <Code arg list> ')' ';'
+
+<Cond statement> ::= if <Expr> <Statement> fi
+		| if <Expr> <Statement> else <Statement> fi
+
+<For statement> ::= <Order> for Id '=' <Range expr> <Statement>
+<Range expr> ::= <Expr> '..' <Expr>
+		| <Expr> '..' <Expr> ':' <Expr>
+
+<While statement> ::= while <Expr> <Statement>
+
+! -------------------------------------------------------------------
+! Expressions
+! -------------------------------------------------------------------
+
+<Expr>       ::= <Op or>
+
+<Op or>      ::= <Op or> '||' <Op and>
+               | <Op and>
+
+<Op and>     ::= <Op and> '&&' <Op equate>
+               | <Op equate>
+
+<Op equate>  ::= <Op equate> '==' <Op compare>
+               | <Op equate> '!=' <Op compare>
+               | <Op compare>
+
+<Op compare> ::= <Op compare> '<'  <Op add>
+               | <Op compare> '>'  <Op add>
+               | <Op compare> '<=' <Op add>
+               | <Op compare> '>=' <Op add>
+               | <Op add>
+
+<Op add>     ::= <Op add> '+' <Op mult>
+               | <Op add> '-' <Op mult>
+               | <Op mult>
+
+<Op mult>    ::= <Op mult> '*' <Op unary>
+               | <Op mult> '/' <Op unary>
+               | <Op unary>
+
+<Op unary>   ::= '!'    <Op unary>
+               | '-'    <Op unary>
+               | <Value>
+
+<Value>      ::= DecLiteral
+               | <Data>
+               | '(' <Expr> ')'
+               

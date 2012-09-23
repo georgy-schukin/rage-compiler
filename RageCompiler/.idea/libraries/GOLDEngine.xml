@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="GOLDEngine">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/GOLDEngine.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
