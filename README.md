@@ -1,4 +1,4 @@
-rage-compiler
+Rage compiler
 =============
 
 Rage language compiler
