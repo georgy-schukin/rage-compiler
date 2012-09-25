@@ -1,6 +1,6 @@
 "Name"     = 'Rage'
 "Author"   = 'Schukin G.'
-"Version"  = '1.0'
+"Version"  = '1.1'
 "About"    = 'Rage language grammar'
 
 "Case Sensitive" = True
@@ -13,23 +13,25 @@
 !{Hex Digit}      = {Digit} + [abcdefABCDEF]
 !{Oct Digit}      = [01234567]
 
-{Id Head}        = {Letter} + [_]
-{Id Tail}        = {Id Head} + {Digit}
+{Id Head}         = {Letter} + [_]
+{Id Tail}         = {Id Head} + {Digit}
+{Id Full}         = {Id Tail} + [.]
 
-{String Ch}      = {Printable} - ["]
-{Char Ch}        = {Printable} - ['']
+{String Ch}       = {Printable} - ["]
+{Char Ch}         = {Printable} - ['']
 
-DecLiteral       = [123456789]{digit}*
+DecLiteral        = [123456789]{Digit}* | [0]
 !OctLiteral       = 0{Oct Digit}*
 !HexLiteral       = 0x{Hex Digit}+
-!FloatLiteral     = {Digit}*'.'{Digit}+
+FloatLiteral      = {Digit}*'.'{Digit}+
 
 !StringLiteral    = '"'( {String Ch} | '\'{Printable} )* '"'
 !CharLiteral      = '' ( {Char Ch} | '\'{Printable} )''
 
-Id               = {Id Head}{Id Tail}*
+Id                = {Id Head}{Id Tail}*
+FullId            = ({Id Head}{Id Tail}*'.')+{Id Head}{Id Tail}*
 
-CodeString       = '{' {Printable}* '}'
+CodeString        = '{' {Printable}* '}'
 
 ! -------------------------------------------------------------------
 ! Comments
@@ -49,86 +51,113 @@ Comment Line  = '//'
 ! -------------------------------------------------------------------
 ! Rules
 ! -------------------------------------------------------------------
+<Program> ::= <Decl list>
 
-<Data> ::= Id | Id '[' <Expr> ']'
-<Data type> ::= Id | Id '[' <Expr> ']' | Id '[' ']'
-<Data decl> ::= <Data type> <Data>
-<Order> ::= seq | par |
+<Decl list> ::= <Decl> <Decl list> | <Decl>
 
-<Program> ::= <Decl list> 
-<Decl list> ::= <Decl> <Decl list> |
-<Decl> ::= <Package decl> | <Code decl>
+<Decl> ::= <Package decl>
+           | <Use decl>
+           | <Code decl>
 
 <Package decl> ::= package Id
+<Use decl> ::= use Id
 
-<Code decl> ::= <Atomic code decl> | <Struct code decl>
-<Atomic code decl> ::= atomic Id '(' <Code formal arg list> ')' CodeString
-<Struct code decl> ::= Id '(' <Code formal arg list> ')' <Statement>
+<Code decl> ::= <Atomic code decl>
+                | <Struct code decl>
 
-<Code formal arg list> ::= <Data decl>
-             | <Data decl> ',' <Code formal arg list> |
+<Atomic code decl> ::= atomic Id '(' <Arg list> ')' CodeString
 
-<Code arg list> ::= <Expr>
-             | <Expr> ',' <Code arg list> |
+<Struct code decl> ::= <Arg list> func Id '(' <Arg list> ')' <Statement>
 
-<Statement> ::= <Data statement>
-            | <Block statement>
-            | <Call statement>
-            | <Cond statement>
-            | <For statement>
-            | <While statement>
-<Statement list> ::= <Statement> <Statement list> | 
+<Arg list> ::= <Arg> ',' <Arg list>
+               | <Arg> |
 
-<Data statement> ::= <Data decl> ';'
+<Arg> ::= '@' Id
 
+<Statement> ::= if '(' <Expr> ')' <Statement>
+                | if '(' <Expr> ')' <Then statement> else <Statement>
+                | while '(' <Expr> ')' <Statement>
+                | <Order> for '(' Id '=' <Range expr> ')' <Statement>
+                | reduce
+                | <Normal statement>
+
+<Then Statement> ::= if '(' <Expr> ')' <Then statement> else <Then statement>
+                     | while '(' <Expr> ')' <Then statement>
+                     | <Order> for '(' Id '=' <Range expr> ')' <Then statement>
+                     | reduce
+                     | <Normal statement>
+
+<Normal statement> ::= <Block statement>
+                       | <Expr list> '=' <Expr list> ';'
+                       | <Expr list> ';'
+                       | ';'             !Null statement
+               
 <Block statement> ::= <Order> '{' <Statement list> '}'
 
-<Call statement> ::= Id '(' <Code arg list> ')' ';'
-
-<Cond statement> ::= if <Expr> <Statement> fi
-		| if <Expr> <Statement> else <Statement> fi
-
-<For statement> ::= <Order> for Id '=' <Range expr> <Statement>
+<Statement list> ::= <Statement> <Statement list> |
+            	
 <Range expr> ::= <Expr> '..' <Expr>
-		| <Expr> '..' <Expr> ':' <Expr>
+                 | <Expr> '..' <Expr> ':' <Expr>
 
-<While statement> ::= while <Expr> <Statement>
+<Data> ::= Id | Id '[' <Expr list> ']'
+!           | Id '[' <Array slice> ']'
+
+<Order> ::= par | seq |
+
+!<Array slice> ::= <Expr> ':' <Expr> ':' <Expr>
+!              | <Expr> ':' <Expr>
+!              | ':' <Expr> ':' <Expr>
+!              | ':' <Expr>
+!              | ':' ':' <Expr>
+
+!<Data type> ::= Id | Id '[' <Expr> ']' | Id '[' ']'
+!<Data decl> ::= <Data type> <Data>
 
 ! -------------------------------------------------------------------
 ! Expressions
 ! -------------------------------------------------------------------
 
-<Expr>       ::= <Op or>
+<Expr> ::= <Op or>
 
 <Op or>      ::= <Op or> '||' <Op and>
-               | <Op and>
+                 | <Op and>
 
 <Op and>     ::= <Op and> '&&' <Op equate>
-               | <Op equate>
+                 | <Op equate>
 
 <Op equate>  ::= <Op equate> '==' <Op compare>
-               | <Op equate> '!=' <Op compare>
-               | <Op compare>
+                 | <Op equate> '!=' <Op compare>
+                 | <Op compare>
 
 <Op compare> ::= <Op compare> '<'  <Op add>
-               | <Op compare> '>'  <Op add>
-               | <Op compare> '<=' <Op add>
-               | <Op compare> '>=' <Op add>
-               | <Op add>
+                 | <Op compare> '>'  <Op add>
+                 | <Op compare> '<=' <Op add>
+                 | <Op compare> '>=' <Op add>
+                 | <Op add>
 
 <Op add>     ::= <Op add> '+' <Op mult>
-               | <Op add> '-' <Op mult>
-               | <Op mult>
+                 | <Op add> '-' <Op mult>
+                 | <Op mult>
 
 <Op mult>    ::= <Op mult> '*' <Op unary>
-               | <Op mult> '/' <Op unary>
-               | <Op unary>
+                 | <Op mult> '/' <Op unary>
+                 | <Op mult> '%' <Op unary>
+                 | <Op unary>
 
-<Op unary>   ::= '!'    <Op unary>
-               | '-'    <Op unary>
-               | <Value>
+<Op unary>   ::= '!' <Op unary>
+                 | '-' <Op unary>
+                 | <Value>
 
-<Value>      ::= DecLiteral
-               | <Data>
-               | '(' <Expr> ')'
-               
+<Value>      ::= DecLiteral                  ! integer number
+                 | FloatLiteral              ! float number
+                 | <Data>                    ! access to var
+                 | Id '(' <Expr list> ')'    ! function call with args
+                 | Id '(' ')'                ! function call without args
+                 | '(' <Expr> ')'            ! expr in parentneses
+                 | '[' <Expr list> ']'       ! list/array
+                 | '[' ']'                   ! empty list/array
+              
+<Expr list> ::= <Expr>
+                | <Expr> ',' <Expr list>
+
+
