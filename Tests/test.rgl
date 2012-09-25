@@ -1,18 +1,19 @@
 package test
 
-atomic init(int p, int i) {p = i;}
+atomic init(p, i) {p = i;}
 
-atomic inc(int p) {p += 3;}
+atomic inc(p) {p += 3;}
 
-atomic print(int p) {printf("%d\n", p);}
+atomic print(p) {printf("%d\n", p);}
 
 main() {
-	int a[20];
-	par for i = 1..20 {
-		init(a[i], i*2);
-		inc(a[i]);
-		if(a[i] > 10)
-			print(a[i]);
-		fi
+	a = [];
+	init(a[1], 1);
+	init(a[2], 1);
+	par for i = 3..20 {
+		init(a[i], a[i-1] + a[i - 2]);
+		//inc(a[i]);
+		(a[i] > 10) =>
+			print(a[i]);		
 	}
 }
