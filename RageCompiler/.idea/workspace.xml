@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ce0f0b85-fad4-4673-a41e-67762ddcbc21" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/AtomicCodeObject.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/StructuredCodeObject.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/items/comp/AssignItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/items/help/ArgItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/items/var/VarItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/rage/compiler/base/expr/items/ExpressionCallItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/rage/compiler/base/expr/items/ExpressionConstItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/rage/compiler/base/expr/items/ExpressionListItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/rage/compiler/base/expr/items/ExpressionVarItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/rage/compiler/base/expr/items/ExpressionVarPropertyItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/rage/compiler/codegen/xml/XMLGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Grammar/Rage.grm" afterPath="$PROJECT_DIR$/../Grammar/Rage.grm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Tests/Rage.cgt" afterPath="$PROJECT_DIR$/../Tests/Rage.cgt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rage/compiler/base/code/CodeObject.java" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/CodeObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rage/compiler/base/code/CodePackage.java" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/CodePackage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rage/compiler/base/code/items/CodeItem.java" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/items/CodeItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rage/compiler/base/code/items/comp/CodeDeclItem.java" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/items/comp/CodeDeclItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rage/compiler/base/expr/ExpressionItem.java" afterPath="$PROJECT_DIR$/src/rage/compiler/base/expr/ExpressionItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rage/compiler/codegen/cpp/CPPCodeGenerator.java" afterPath="$PROJECT_DIR$/src/rage/compiler/codegen/cpp/CPPCodeGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rage/compiler/codegen/cpp/CPPExpressionGenerator.java" afterPath="$PROJECT_DIR$/src/rage/compiler/codegen/cpp/CPPExpressionGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rage/compiler/parser/RageParser.java" afterPath="$PROJECT_DIR$/src/rage/compiler/parser/RageParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/rage/compiler/parser/RageTreeParser.java" afterPath="$PROJECT_DIR$/src/rage/compiler/parser/RageTreeParser.java" />
-      <change type="MOVED" beforePath="D:\schukin\Projects\GitHub\rage-compiler\RageCompiler\src\rage\compiler\base\code\items\data\DataDeclItem.java" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/items/var/DataDeclItem.java" />
-      <change type="MOVED" beforePath="D:\schukin\Projects\GitHub\rage-compiler\RageCompiler\src\rage\compiler\base\code\items\data\DataItem.java" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/items/var/DataItem.java" />
-      <change type="MOVED" beforePath="D:\schukin\Projects\GitHub\rage-compiler\RageCompiler\src\rage\compiler\base\code\items\data\DataTypeItem.java" afterPath="$PROJECT_DIR$/src/rage/compiler/base/code/items/var/DataTypeItem.java" />
-    </list>
+    <list default="true" id="ce0f0b85-fad4-4673-a41e-67762ddcbc21" name="Default" comment="" />
     <ignored path="RageCompiler.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -93,7 +66,7 @@
       <file leaf-file-name="RageTreeParser.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/rage/compiler/parser/RageTreeParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="129" column="24" selection-start="10773" selection-end="10773" vertical-scroll-proportion="0.28967255">
+            <state line="130" column="15" selection-start="10873" selection-end="10873" vertical-scroll-proportion="0.9748111">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#10095#10103#0" expanded="true" />
@@ -831,7 +804,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39957264" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31610942" sideWeight="0.7740303" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22596964" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22596964" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1017,7 +990,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/rage/compiler/parser/RageTreeParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="24" selection-start="10773" selection-end="10773" vertical-scroll-proportion="0.28967255">
+        <state line="130" column="15" selection-start="10873" selection-end="10873" vertical-scroll-proportion="0.9748111">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#10095#10103#0" expanded="true" />
