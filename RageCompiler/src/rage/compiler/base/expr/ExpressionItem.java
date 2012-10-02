@@ -1,17 +1,22 @@
 package rage.compiler.base.expr;
 
-import rage.compiler.base.code.items.data.DataItem;
-
-import java.util.Set;
-
 /**
  * Expression item (leaf)
  */
 
-public class ExpressionItem implements Expression {
-    protected Object item;
+public abstract class ExpressionItem implements Expression {
+    public enum Type {
+        CONST,
+        VAR,
+        CALL,
+        PROPERTY,
+        LIST
+    }
 
-    public ExpressionItem(Object item) {
+    public abstract Type getType();
+    //protected Object item;
+
+    /*public ExpressionItem(Object item) {
         this.item = item;
     }
 
@@ -41,5 +46,5 @@ public class ExpressionItem implements Expression {
             if(dataItem.getArrayExpr() != null)
                 dataItem.getArrayExpr().getVarNames(varNames);
         }
-    }
+    }*/
 }

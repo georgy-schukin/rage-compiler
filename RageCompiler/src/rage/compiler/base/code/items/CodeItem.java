@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CodeItem {
     public enum Type {
+        VAR,
         DATA,
         DATA_DECL,
         DATA_TYPE,
@@ -18,7 +19,8 @@ public interface CodeItem {
         BLOCK,
         FOR,
         COND,
-        WHILE
+        WHILE,
+        ARG
     }
 
     public List<CodeItem> getChildren();

@@ -1,7 +1,7 @@
 package rage.compiler.base.code.items.comp;
 
 import rage.compiler.base.code.items.CodeItem;
-import rage.compiler.base.code.items.data.DataDeclItem;
+import rage.compiler.base.code.items.var.DataDeclItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,18 +12,19 @@ import java.util.List;
 
 public class CodeDeclItem extends BlockItem {
     protected String name;
-    protected List<DataDeclItem> args = new ArrayList<DataDeclItem>();
+    //protected List<DataDeclItem> args = new ArrayList<DataDeclItem>();
+    protected List<String> args = new ArrayList<String>();
     protected String code = "";
     protected boolean isAtomic;
 
-    public CodeDeclItem(String name, List<DataDeclItem> args, String code) {
+    public CodeDeclItem(String name, List<String> args, String code) {
         this.name = name;
         this.args = args;
         this.code = code;
         this.isAtomic = true; // atomic code declaration
     }
 
-    public CodeDeclItem(String name, List<DataDeclItem> args, CodeItem code) {
+    public CodeDeclItem(String name, List<String> args, CodeItem code) {
         this.name = name;
         this.args = args;
         addChild(code);
@@ -38,7 +39,7 @@ public class CodeDeclItem extends BlockItem {
         return name;
     }
 
-    public final List<DataDeclItem> getArgs() {
+    public final List<String> getArgs() {
         return args;
     }
 

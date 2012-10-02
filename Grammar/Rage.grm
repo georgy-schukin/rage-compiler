@@ -23,15 +23,15 @@
 DecLiteral        = [123456789]{Digit}* | [0]
 !OctLiteral       = 0{Oct Digit}*
 !HexLiteral       = 0x{Hex Digit}+
-FloatLiteral      = {Digit}*'.'{Digit}+
+FloatLiteral      = {Digit}+'.'{Digit}+
 
-!StringLiteral    = '"'( {String Ch} | '\'{Printable} )* '"'
+StringLiteral    = '"'( {String Ch} | '\'{Printable} )* '"'
 !CharLiteral      = '' ( {Char Ch} | '\'{Printable} )''
 
 Id                = {Id Head}{Id Tail}*
-FullId            = ({Id Head}{Id Tail}*'.')+{Id Head}{Id Tail}*
+!FullId            = ({Id Head}{Id Tail}*'.')+{Id Head}{Id Tail}*
 
-CodeString        = '{' {Printable}* '}'
+!CodeString        = '{' {Printable}* '}'
 
 ! -------------------------------------------------------------------
 ! Comments
@@ -65,25 +65,27 @@ Comment Line  = '//'
 <Code decl> ::= <Atomic code decl>
                 | <Struct code decl>
 
-<Atomic code decl> ::= atomic Id '(' <Arg list> ')' CodeString
+<Atomic code decl> ::= atomic Id '(' <Arg list> ')' Id 
 
 <Struct code decl> ::= <Arg list> func Id '(' <Arg list> ')' <Statement>
 
 <Arg list> ::= <Arg> ',' <Arg list>
                | <Arg> |
 
-<Arg> ::= '@' Id
+<Arg> ::= '@' Id | '@'
 
 <Statement> ::= if '(' <Expr> ')' <Statement>
                 | if '(' <Expr> ')' <Then statement> else <Statement>
                 | while '(' <Expr> ')' <Statement>
                 | <Order> for '(' Id '=' <Range expr> ')' <Statement>
+                | <Order> for '(' Id in <Expr> ')' <Statement>
                 | reduce
                 | <Normal statement>
 
 <Then Statement> ::= if '(' <Expr> ')' <Then statement> else <Then statement>
                      | while '(' <Expr> ')' <Then statement>
                      | <Order> for '(' Id '=' <Range expr> ')' <Then statement>
+                     | <Order> for '(' Id in <Expr> ')' <Then statement>
                      | reduce
                      | <Normal statement>
 
@@ -91,6 +93,7 @@ Comment Line  = '//'
                        | <Expr list> '=' <Expr list> ';'
                        | <Expr list> ';'
                        | ';'             !Null statement
+                       | return <Expr list> ';'
                
 <Block statement> ::= <Order> '{' <Statement list> '}'
 
@@ -99,7 +102,7 @@ Comment Line  = '//'
 <Range expr> ::= <Expr> '..' <Expr>
                  | <Expr> '..' <Expr> ':' <Expr>
 
-<Data> ::= Id | Id '[' <Expr list> ']'
+<Variable> ::= Id | Id '[' <Expr> ']'
 !           | Id '[' <Array slice> ']'
 
 <Order> ::= par | seq |
@@ -110,9 +113,6 @@ Comment Line  = '//'
 !              | ':' <Expr>
 !              | ':' ':' <Expr>
 
-!<Data type> ::= Id | Id '[' <Expr> ']' | Id '[' ']'
-!<Data decl> ::= <Data type> <Data>
-
 ! -------------------------------------------------------------------
 ! Expressions
 ! -------------------------------------------------------------------
@@ -120,9 +120,11 @@ Comment Line  = '//'
 <Expr> ::= <Op or>
 
 <Op or>      ::= <Op or> '||' <Op and>
+                 | <Op or> or <Op and>
                  | <Op and>
 
 <Op and>     ::= <Op and> '&&' <Op equate>
+                 | <Op and> and <Op equate>
                  | <Op equate>
 
 <Op equate>  ::= <Op equate> '==' <Op compare>
@@ -145,12 +147,15 @@ Comment Line  = '//'
                  | <Op unary>
 
 <Op unary>   ::= '!' <Op unary>
+                 | not <Op unary>
                  | '-' <Op unary>
                  | <Value>
 
 <Value>      ::= DecLiteral                  ! integer number
                  | FloatLiteral              ! float number
-                 | <Data>                    ! access to var
+                 | StringLiteral             ! string
+                 | <Variable>                ! var
+                 | <Variable> '.' Id         ! property
                  | Id '(' <Expr list> ')'    ! function call with args
                  | Id '(' ')'                ! function call without args
                  | '(' <Expr> ')'            ! expr in parentneses

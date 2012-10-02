@@ -1,6 +1,6 @@
 package rage.compiler.codegen.cpp;
 
-import rage.compiler.base.code.items.data.DataItem;
+import rage.compiler.base.code.items.var.DataItem;
 import rage.compiler.base.expr.BinaryExpression;
 import rage.compiler.base.expr.Expression;
 import rage.compiler.base.expr.ExpressionItem;
@@ -46,7 +46,7 @@ public class CPPExpressionGenerator {
                     convertUnaryOp(uExpr.getOperation()) + ", " +
                     generateExpression(uExpr.getMember()) + ")";
 
-        } else if(expr instanceof ExpressionItem) {
+        } /*else if(expr instanceof ExpressionItem) {
             ExpressionItem eItem = (ExpressionItem)expr;
             if(eItem.isData()) {
                 DataItem dataItem = (DataItem)eItem.getItem();
@@ -55,6 +55,6 @@ public class CPPExpressionGenerator {
             } else {
                 return "new ExpressionConstItem(" + eItem.getItem().toString() + ")";
             }
-        } else throw new Exception("Unknown expression type");
+        }*/ else throw new Exception("Unknown expression type");
     }
 }

@@ -1,6 +1,7 @@
 package rage.compiler.base.code;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,8 +9,9 @@ import java.util.List;
  */
 
 public class CodePackage {
-    protected String name;
-    protected List<CodeObject> codeObjects = new ArrayList<CodeObject>();
+    protected String name; // name of the packages
+    protected List<String> usedPackages = new ArrayList<String>(); // other packages, used in this package
+    protected List<CodeObject> codeObjects = Collections.emptyList(); // code objects in this package
 
     public CodePackage(String name, List<CodeObject> codeObjects) {
         this.name = name;

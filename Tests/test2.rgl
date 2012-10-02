@@ -1,0 +1,12 @@
+package test2
+
+@c func sum(@a, @b) {
+	c = a + b;
+}
+
+func main() {
+	a = [1, 2, 3];
+	b = [4, 5, 6];	
+	c = sum(a, b);	
+	for(i = 0 .. 3) c[i] = sum(2*i, c[i]);
+}

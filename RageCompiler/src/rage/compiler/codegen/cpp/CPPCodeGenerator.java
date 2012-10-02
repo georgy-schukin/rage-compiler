@@ -4,7 +4,7 @@ import rage.compiler.base.code.CodeObject;
 import rage.compiler.base.code.CodePackage;
 import rage.compiler.base.code.items.*;
 import rage.compiler.base.code.items.comp.*;
-import rage.compiler.base.code.items.data.DataDeclItem;
+import rage.compiler.base.code.items.var.DataDeclItem;
 import rage.compiler.base.code.items.help.OrderItem;
 import rage.compiler.base.expr.Expression;
 import rage.compiler.codegen.CodeGenerator;
@@ -17,7 +17,7 @@ import java.util.*;
  * Build code for Rage runtime system (C++)
  */
 
-public class CPPCodeGenerator implements CodeGenerator {
+public abstract class CPPCodeGenerator implements CodeGenerator {
 
     protected interface Strings {
         final String EXTENSION = ".hpp";
@@ -49,7 +49,7 @@ public class CPPCodeGenerator implements CodeGenerator {
 
     public CPPCodeGenerator() {}
 
-    public void generate(CodePackage codePackage, String fileName, String directory) throws Exception {
+    /*public void generate(CodePackage codePackage, String fileName, String directory) throws Exception {
         this.codePackage = codePackage;
         writer = new BufferedWriter(new FileWriter(directory + fileName + Strings.EXTENSION, false));
             genPackage(codePackage); // generate code
@@ -168,7 +168,7 @@ public class CPPCodeGenerator implements CodeGenerator {
                     name, CPPExpressionGenerator.generateExpression(e)));
         }
         //TODO: maybe should be replaced with auto runtime reqs handling
-        for(String var : item.getVarNames()) { // gen data reqs for call
+        for(String var : item.getVarNames()) { // gen var reqs for call
             writer.write(MessageFormat.format(Strings.FORMAT_DATA_REQ, name, var));
         }
         return name;
@@ -209,5 +209,5 @@ public class CPPCodeGenerator implements CodeGenerator {
         for(CodeItem i : item.getChildren()) {
             writer.write(MessageFormat.format(Strings.FORMAT_CHILDREN, name, genItem(i)));
         }
-    }
+    } */
 }
